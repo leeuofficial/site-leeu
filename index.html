@@ -1,32 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-          <title>LEE-U</title>
-          <meta name="viewport" content="width=device-width, initial-scale=1">
-          <style>
-            body {
-              margin: 0;
-              height: 100vh;
-              background: #0b0b0b;
-              color: #fff;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              font-family: Arial, sans-serif;
-              text-align: center;
-            }
-            h1 { font-size: 3rem; }
-            p { opacity: 0.7; }
-          </style>
-        </head>
-        <body>
-          <div>
-            <h1>LEE-U</h1>
-            <p>Music • Film • Storytelling</p>
-            </p>Coming Soon</p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LEE-U — Artist Profile</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --success: #3fb950;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    a { color: var(--accent); text-decoration: none; }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h1 {
+      font-size: 18px;
+      margin: 0;
+      font-weight: 600;
+    }
+    header nav a {
+      margin-left: 16px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    header nav a:hover { color: var(--text); }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+    }
+
+    /* Sidebar */
+    .profile {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px;
+    }
+    .avatar {
+      width: 100%;
+      border-radius: 50%;
+      margin-bottom: 16px;
+    }
+    .profile h2 {
+      margin: 0 0 4px;
+      font-size: 20px;
+    }
+    .profile .username {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+    .profile p {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .stats {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      font-size: 11px;
+    }
+    .stats span strong { color: var(--text); }
+
+    /* Main content */
+    .content {
+      display: grid;
+      gap: 24px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .repos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .repo {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px;
+    }
+    .repo h4 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      color: var(--accent);
+    }
+    .repo p {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0 0 8px;
+    }
+    .repo .meta {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+    }
+      
+      .epk-btn {
+        display: inline-block;
+        margin-top: 16px;
+        padding: 10px 16px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 14px;
+        color: var(--text);
+        background: var(--panel);
+      }
+      .epk-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* Project images (Making Waves, Coming To Me) */
+      .project-img {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        border-radius: 6px;
+        margin-bottom: 10px;
+        border: 1px solid var(--border);
+      }
+      
+      .project-embed {
+        width: 100%;
+        height: 152px;
+        border-radius: 12px;
+        border: none;
+        margin-bottom: 10px;
+
+        display: block;            /* ⬅️ FIX tràn ngang */
+        max-width: 100%;           /* ⬅️ KHÓA chiều ngang */
+      }
+
+      
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 16px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>LEE-U</h1>
+    <nav>
+        <nav>
+          <a href="/#music">Music</a>
+          <a href="/#film">Film</a>
+          <a href="/#projects">Projects</a>
+          <a href="/press/">Press</a>
+          <a href="/#contact">Contact</a>
+        </nav>
+
+  </header>
+
+  <main class="container">
+    <aside class="profile">
+      <img src="avatar.jpg" alt="LEE-U avatar" class="avatar" />
+      <h2>LEE-U</h2>
+      <div class="username">contact@lee-u.com</div>
+      <p>Vietnamese multidisciplinary artist working across music & film. Music-driven emotion with cinematic visuals.</p>
+      <div class="stats">
+        <span><strong>500k+ </strong>Followers Across Platforms</span>
+        <span><strong>200k+
+        </strong>Streams on Music Platforms</span>
+        <span><strong>300k+ </strong>Views on YouTube</span>
+      </div>
+      
+      <div class="social" style="margin-top:16px; display:grid; gap:8px; font-size:13px;">
+      <a href="https://www.facebook.com/leeuofficial.vn" target="_blank">Facebook / Fanpage</a>
+      <a href="https://www.tiktok.com/@leeu.official/" target="_blank">TikTok</a>
+      <a href="https://instagram.com/its.leeu/" target="_blank">Instagram</a>
+      <a href="https://open.spotify.com/artist/5uWaAcRRYdHNj1QopNrsOU?si=jZGccitzTxeaI1nAkQvrug" target="_blank">Spotify</a>
+      <a href="https://music.apple.com/vn/artist/lee-u/1673100668" target="_blank">Apple Music</a>
+      </div>
+    </aside>
+
+    <section class="content">
+      <div class="card">
+        <h3>Featured Projects</h3>
+        <div class="repos">
+
+          <!-- MAKING WAVES -->
+          <div class="repo">
+            <a href="https://www.youtube.com/watch?v=xTNwAkRVbXs&t=95s" target="_blank">
+              <img src="making-waves.jpg" alt="Making Waves" class="project-img">
+            </a>
+
+            <h4>
+              <a href="https://www.youtube.com/watch?v=xTNwAkRVbXs&t=95s" target="_blank">
+                MAKING WAVES
+              </a>
+            </h4>
+
+            <p>
+              A short film capturing the emotional and creative journey behind making music.
+              Making Waves is a heartfelt look at the passion, persistence, and purpose that
+              fuel a rising artist’s path.
+            </p>
+
+            <div class="meta">
+              <span>Short Film</span>
+              <span>2025</span>
+            </div>
           </div>
-        </body>
-        </html>
-        
-       
+
+          <!-- COMING TO ME -->
+          <div class="repo">
+            <iframe
+              class="project-embed"
+              src="https://open.spotify.com/embed/album/2VjtqKNuP7lTNkVGTebuCy"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+            </iframe>
+
+            <h4>COMING TO ME</h4>
+
+            <p>
+              “Coming To Me” is a song about love finding its way back through loneliness
+              and distance, returning to where the heart truly belongs.
+              It carries a gentle, sincere emotion—like a quiet wait filled with hope.
+            </p>
+
+            <div class="meta">
+              <span>Album</span>
+              <span>2025</span>
+            </div>
+          </div>
+
+          <!-- LOVER -->
+          <div class="repo">
+            <div class="embed-placeholder">
+            </div>
+
+            <h4>LOVER</h4>
+
+            <p>Upcoming Album...</p>
+
+            <div class="meta">
+              <span></span>
+              <span>Summer 2026</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="card">
+        <h3>Activity</h3>
+        <p style="font-size:13px;color:var(--muted)">LEE-U continues to explore emotion through music-driven storytelling, translating inner moments into sound and image. His ongoing work moves between song, cinema, and live performance, tracing a personal journey while resonating with a growing global audience.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 LEE-U
+  </footer>
+</body>
+</html>
