@@ -1,331 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LEE-U — Artist Profile</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LEE-U</title>
 
-  <style>
-    :root {
-      --bg: #0d1117;
-      --panel: #161b22;
-      --border: #30363d;
-      --text: #c9d1d9;
-      --muted: #8b949e;
-      --accent: #58a6ff;
-    }
+<style>
+:root {
+  --bg: #000;
+  --text: #fff;
+  --muted: #9aa0a6;
+  --pill: rgba(255,255,255,0.08);
+  --border: rgba(255,255,255,0.12);
+}
 
-    * { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
+body {
+  margin: 0;
+  height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Inter, Helvetica, Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
 
-    a {
-      color: var(--accent);
-      text-decoration: none;
-    }
+/* ===== HERO (APP HOME FEEL) ===== */
+.hero {
+  text-align: center;
+  animation: fadeIn 1.2s ease forwards;
+}
 
-    /* ===== Floating Menu ===== */
-    .menu-wrapper {
-      position: fixed;
-      top: 20px;
-      right: 24px;
-      z-index: 50;
-    }
+.hero h1 {
+  font-size: clamp(36px, 6vw, 56px);
+  letter-spacing: 0.22em;
+  margin: 0;
+}
 
-    .menu-btn {
-      padding: 8px 18px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      color: var(--text);
-      border: 1px solid var(--border);
-      font-size: 14px;
-      cursor: pointer;
-    }
+.hero .sub {
+  margin-top: 14px;
+  font-size: 13px;
+  letter-spacing: 0.28em;
+  color: var(--muted);
+}
 
-    .menu-btn:hover {
-      background: rgba(255,255,255,0.18);
-    }
+.hero .tagline {
+  margin-top: 22px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--muted);
+  opacity: .85;
+}
 
-    .menu-items {
-      margin-top: 10px;
-      display: none;
-      flex-direction: column;
-      gap: 10px;
-      align-items: flex-end;
-      opacity: 0;
-      transform: translateY(-6px);
-      transition: all 0.25s ease;
-    }
+/* ===== MENU ===== */
+.menu-wrapper {
+  position: fixed;
+  top: 22px;
+  right: 22px;
+  z-index: 10;
+}
 
-    .menu-items a {
-      padding: 8px 18px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-      color: var(--muted);
-      font-size: 14px;
-    }
+.menu-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--pill);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+}
 
-    .menu-items a:hover {
-      background: rgba(255,255,255,0.18);
-      color: var(--text);
-    }
+.menu-btn:hover {
+  background: rgba(255,255,255,0.18);
+}
 
-    .menu-items.show {
-      display: flex;
-      opacity: 1;
-      transform: translateY(0);
-    }
+.menu-items {
+  position: absolute;
+  top: 54px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity .28s ease, transform .28s ease;
+}
 
-    /* ===== Layout ===== */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 24px;
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 24px;
-    }
+.menu-items.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
 
-    @media (max-width: 900px) {
-      .container {
-        grid-template-columns: 1fr;
-      }
-    }
+.menu-items a {
+  padding: 9px 18px;
+  border-radius: 999px;
+  background: var(--pill);
+  border: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text);
+  text-decoration: none;
+  white-space: nowrap;
+  backdrop-filter: blur(6px);
+}
 
-    /* ===== Sidebar ===== */
-    .profile {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
-    }
+.menu-items a:hover {
+  background: rgba(255,255,255,0.22);
+}
 
-    .avatar {
-      width: 100%;
-      border-radius: 50%;
-      margin-bottom: 16px;
-    }
-
-    .profile h2 {
-      margin: 0 0 4px;
-      font-size: 20px;
-    }
-
-    .username {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 12px;
-    }
-
-    .profile p {
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .stats {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      font-size: 12px;
-      margin-top: 12px;
-    }
-
-    .social {
-      margin-top: 16px;
-      display: grid;
-      gap: 8px;
-      font-size: 13px;
-    }
-
-    /* ===== Content ===== */
-    .content {
-      display: grid;
-      gap: 24px;
-    }
-
-    .card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
-    }
-
-    .card h3 {
-      margin: 0 0 12px;
-      font-size: 16px;
-      font-weight: 600;
-    }
-
-    .repos {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 16px;
-    }
-
-    .repo {
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 12px;
-    }
-
-    .repo h4 {
-      margin: 6px 0;
-      font-size: 14px;
-    }
-
-    .repo p {
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .project-img {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-      border-radius: 6px;
-      margin-bottom: 10px;
-    }
-
-    .project-embed {
-      width: 100%;
-      height: 152px;
-      border-radius: 12px;
-      border: none;
-      margin-bottom: 10px;
-    }
-
-    .meta {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 6px;
-    }
-
-    /* ===== Footer ===== */
-    footer {
-      border-top: 1px solid var(--border);
-      text-align: center;
-      padding: 16px;
-      font-size: 12px;
-      color: var(--muted);
-    }
-  </style>
+/* ===== FADE ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- Floating Menu -->
-  <div class="menu-wrapper">
-    <button class="menu-btn" onclick="toggleMenu()">Menu</button>
-    <div class="menu-items" id="menu">
-      <a href="#music">Music</a>
-      <a href="#film">Film</a>
-      <a href="#store">Store</a>
-      <a href="/press/">Press</a>
-      <a href="#contact">Contact</a>
-    </div>
+<!-- AMBIENT SOUND -->
+<audio id="ambient" loop preload="auto">
+  <source src="/ambient.mp3" type="audio/mpeg">
+</audio>
+
+<!-- MENU -->
+<div class="menu-wrapper">
+  <button class="menu-btn" onclick="toggleMenu()">☰</button>
+  <div class="menu-items" id="menu">
+    <a href="/music">Music</a>
+    <a href="/film">Film</a>
+    <a href="/store">Store</a>
+    <a href="/press">Press</a>
+    <a href="/contact">Contact</a>
   </div>
+</div>
 
-  <main class="container">
-    <aside class="profile">
-      <img src="avatar.jpg" alt="LEE-U avatar" class="avatar" />
-      <h2>LEE-U</h2>
-      <div class="username">contact@lee-u.com</div>
-      <p>
-        Vietnamese multidisciplinary artist working across music & film.
-        Music-driven emotion with cinematic visuals.
-      </p>
+<!-- HERO -->
+<div class="hero" onclick="unlockAudio()">
+  <h1>LEE-U</h1>
+  <div class="sub">Music · Film · Store</div>
+  <div class="tagline">emotion before everything</div>
+</div>
 
-      <div class="stats">
-        <span><strong>500k+</strong> Followers Across Platforms</span>
-        <span><strong>200k+</strong> Streams on Music Platforms</span>
-        <span><strong>300k+</strong> Views on YouTube</span>
-      </div>
+<script>
+const audio = document.getElementById("ambient");
+let unlocked = false;
 
-      <div class="social">
-        <a href="https://www.facebook.com/leeuofficial.vn" target="_blank">Facebook</a>
-        <a href="https://www.tiktok.com/@leeu.official/" target="_blank">TikTok</a>
-        <a href="https://instagram.com/its.leeu/" target="_blank">Instagram</a>
-        <a href="https://open.spotify.com/artist/5uWaAcRRYdHNj1QopNrsOU" target="_blank">Spotify</a>
-        <a href="https://music.apple.com/vn/artist/lee-u/1673100668" target="_blank">Apple Music</a>
-      </div>
-    </aside>
+function unlockAudio() {
+  if (!unlocked) {
+    audio.volume = 0.35;
+    audio.play().catch(() => {});
+    unlocked = true;
+  }
+}
 
-    <section class="content">
-      <div class="card">
-        <h3>Featured Projects</h3>
-
-        <div class="repos">
-          <div class="repo">
-            <a href="https://www.youtube.com/watch?v=xTNwAkRVbXs&t=95s" target="_blank">
-              <img src="making-waves.jpg" class="project-img" alt="Making Waves">
-            </a>
-            <h4>MAKING WAVES</h4>
-            <p>
-              A short film capturing the emotional and creative journey
-              behind making music.
-            </p>
-            <div class="meta">
-              <span>Short Film</span>
-              <span>2025</span>
-            </div>
-          </div>
-
-          <div class="repo">
-            <iframe
-              class="project-embed"
-              src="https://open.spotify.com/embed/album/2VjtqKNuP7lTNkVGTebuCy"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-            </iframe>
-            <h4>COMING TO ME</h4>
-            <p>
-              A song about love finding its way back through loneliness
-              and distance.
-            </p>
-            <div class="meta">
-              <span>Album</span>
-              <span>2025</span>
-            </div>
-          </div>
-
-          <div class="repo">
-            <h4>LOVER</h4>
-            <p>Upcoming Album...</p>
-            <div class="meta">
-              <span></span>
-              <span>Summer 2026</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>Activity</h3>
-        <p style="font-size:13px;color:var(--muted)">
-          LEE-U continues to explore emotion through music-driven storytelling,
-          translating inner moments into sound and image.
-        </p>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    © 2026 LEE-U
-  </footer>
-
-  <script>
-    function toggleMenu() {
-      const menu = document.getElementById("menu");
-      if (menu) menu.classList.toggle("show");
-    }
-  </script>
+function toggleMenu() {
+  document.getElementById("menu").classList.toggle("show");
+}
+</script>
 
 </body>
 </html>
